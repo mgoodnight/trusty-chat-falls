@@ -1,0 +1,19 @@
+{
+  "name": "trusty-chat-falls",
+  "version": "1.0.0",
+  "description": "Trust falls in Slack",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgoodnight/trusty-chat-falls.git"
+  },
+  "author": "Matt Goodnight",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mgoodnight/trusty-chat-falls/issues"
+  },
+  "homepage": "https://github.com/mgoodnight/trusty-chat-falls#readme"
+}
