@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  trust-chat-falls-serverless
+Transform:
+  - AWS::Serverless-2016-10-31
+Parameters:
+  STAGE:
+    Type: String
+Resources:
+  SlackTeamInstallations:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: SlackTeamInstallations
+      AttributeDefinitions:
+        - AttributeName: teamId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: teamId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
