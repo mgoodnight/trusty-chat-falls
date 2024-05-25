@@ -1,0 +1,27 @@
+{
+  "settings": {
+    "fallMs": 10000
+  },
+  "dynamoDb": {
+    "tables": {
+      "installs": "SlackTeamInstallations"
+    }
+  },
+  "redis": {
+    "main": {
+      "host": "redis",
+      "port": 6379
+    }
+  },
+  "server": {
+    "port": 3000
+  },
+  "slack": {
+    "install": {
+      "scopes": [
+        "commands",
+        "chat:write"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+services:
+  slack_app:
+    restart: on-failure
+    build: ./
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file: ./.env
+    depends_on:
+      - redis
+  redis:
+    image: redis:7.2-alpine
+    restart: on-failure
+    ports:
+      - "6379:6379"
