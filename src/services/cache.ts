@@ -17,11 +17,10 @@ export class CacheService {
   }
 
   public async checkFallingUserExists(userId: string, channelId: string): Promise<string | null> {
-    return await this.main.zscore(channelId, userId)
+    return await this.main.zscore(channelId, userId);
   }
 
   public async isFallingUserCaught(userId: string, channelId: string): Promise<number> {
-    console.log(this.buildSuccessCacheKey(userId, channelId))
     return await this.main.exists(this.buildSuccessCacheKey(userId, channelId))
   }
 

@@ -1,11 +1,13 @@
 import cacheService from './cache';
 
 export class CatchService {
-  private readonly baseCaughtMsg = 'has successfully caught';
-  private readonly nobodyFallingMsg = 'There is no one falling that you can catch!';
+  private readonly caughtEmoji = ':tada:';
+  private readonly nobodyFallingEmoji = ':sob:';
+  private readonly caughtBaseMsg = 'has successfully caught';
+  private readonly nobodyFallingBaseMsg = 'there is no one falling that you can catch!';
 
   get nobodyFallingRes(): string {
-    return this.nobodyFallingMsg;
+    return `${this.nobodyFallingEmoji}  ${this.userId} ${this.nobodyFallingBaseMsg}`;
   }
 
   constructor(private userId: string, private channelId: string) { }
@@ -20,6 +22,6 @@ export class CatchService {
   }
 
   public getSuccessCaughtMsg(fallingUserId: string): string {
-    return `<@${this.userId}> ${this.baseCaughtMsg} <@${fallingUserId}>`;
+    return `${this.caughtEmoji}  <@${this.userId}> ${this.caughtBaseMsg} <@${fallingUserId}>`;
   }
 }
