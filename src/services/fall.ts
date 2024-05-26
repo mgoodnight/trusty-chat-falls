@@ -1,6 +1,9 @@
 import cacheService from './cache';
 
 export class FallService {
+  private readonly alreadyFallingEmoji = ':x:';
+  private readonly fallenEmoji = ':skull_and_crossbones:';
+  private readonly fallingEmoji = ':rotating_light:';
   private readonly alreadyFallingMsg = 'you are already falling.';
   private readonly fallenBaseMsg = 'has fallen!';
   private readonly fallingBaseMsg = 'is falling...';
@@ -8,15 +11,15 @@ export class FallService {
   constructor(private userId: string, private channelId: string) { }
 
   get alreadyFallingRes(): string {
-    return `<@${this.userId}> ${this.alreadyFallingMsg}`;
+    return `${this.alreadyFallingEmoji}  <@${this.userId}> ${this.alreadyFallingMsg}`;
   }
 
   get fallenRes(): string {
-    return `<@${this.userId}> ${this.fallenBaseMsg}`;
+    return `${this.fallenEmoji}  <@${this.userId}> ${this.fallenBaseMsg}`;
   }
 
   get fallingRes(): string {
-    return `<@${this.userId}> ${this.fallingBaseMsg}`;
+    return `${this.fallingEmoji}  <@${this.userId}> ${this.fallingBaseMsg}`;
   }
 
   public async isUserFalling(): Promise<boolean> {
