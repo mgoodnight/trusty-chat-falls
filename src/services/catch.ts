@@ -1,8 +1,8 @@
 import cacheService from './cache';
 
 export class CatchService {
-  private readonly caughtFallingMsg = 'You have successfully caught';
-  private readonly nobodyFallingMsg = 'There is no one to catch!';
+  private readonly baseCaughtMsg = 'has successfully caught';
+  private readonly nobodyFallingMsg = 'There is no one falling that you can catch!';
 
   get nobodyFallingRes(): string {
     return this.nobodyFallingMsg;
@@ -11,15 +11,15 @@ export class CatchService {
   constructor(private userId: string, private channelId: string) { }
 
   public async catchFallingUser(): Promise<string | undefined> {
-    const nextFallingUserId = await cacheService.dequeueFallingUser(this.channelId);
+    const nextFallingUserId = await cacheService.dequeueFallingUser(this.channelId, this.userId);
 
     if (nextFallingUserId) {
-      await cacheService.setSuccessFallingUser(this.userId, this.channelId);
+      await cacheService.setSuccessFallingUser(nextFallingUserId, this.channelId);
       return nextFallingUserId;
     }
   }
 
-  public getSuccessCaughtMsg(caughtUserId: string): string {
-    return `${this.caughtFallingMsg} <@${caughtUserId}>`;
+  public getSuccessCaughtMsg(fallingUserId: string): string {
+    return `<@${this.userId}> ${this.baseCaughtMsg} <@${fallingUserId}>`;
   }
 }
