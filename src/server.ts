@@ -25,7 +25,7 @@ export class Server {
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
       stateSecret: process.env.SLACK_STATE_SECRET,
-      signingSecret: process.env.SLACK_SIGNING_SECRET as string,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
       scopes: installConfig.scopes,
       installerOptions: {
         authVersion: 'v2',

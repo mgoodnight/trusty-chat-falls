@@ -1,22 +1,22 @@
 import cacheService from './cache';
 
 export class FallService {
-  private readonly alreadyFallingMsg = 'You are already falling.';
-  private readonly fallenMsg = 'You have fallen!';
-  private readonly fallingMsg = 'Falling...';
+  private readonly alreadyFallingMsg = 'you are already falling.';
+  private readonly fallenBaseMsg = 'has fallen!';
+  private readonly fallingBaseMsg = 'is falling...';
 
   constructor(private userId: string, private channelId: string) { }
 
   get alreadyFallingRes(): string {
-    return this.alreadyFallingMsg;
+    return `<@${this.userId}> ${this.alreadyFallingMsg}`;
   }
 
   get fallenRes(): string {
-    return this.fallenMsg;
+    return `<@${this.userId}> ${this.fallenBaseMsg}`;
   }
 
   get fallingRes(): string {
-    return this.fallingMsg;
+    return `<@${this.userId}> ${this.fallingBaseMsg}`;
   }
 
   public async isUserFalling(): Promise<boolean> {
