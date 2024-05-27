@@ -12,7 +12,7 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
     const isFallingAlready = await fall.isUserFalling();
 
     if (isFallingAlready) {
-      await say({ text: fall.alreadyFallingRes })
+      await say({ text: fall.alreadyFallingRes });
     } else {
       await Promise.all([
         fall.setUserFalling(),
@@ -22,7 +22,7 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
       setTimeout(async () => {
         const userCaught = await fall.hasUserBeenCaught();
         if (!userCaught) {
-          await say({ text: fall.fallenRes });
+          await fall.sendFallenRes(say);
         }
 
         await fall.unSetFallingUser();

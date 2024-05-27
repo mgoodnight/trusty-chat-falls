@@ -10,7 +10,7 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
     const successCaughtUserId = await catcher.catchFallingUser();
 
     if (successCaughtUserId) {
-      await say({ text: catcher.getSuccessCaughtMsg(successCaughtUserId) });
+      await catcher.sendCaughtRes(say, successCaughtUserId);
     } else {
       await say({ text: catcher.nobodyFallingRes });
     }

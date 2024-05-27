@@ -1,9 +1,14 @@
 export interface ConfigDynamoDb {
-  tables: ConfigDynamoDbTables
+  tables: ConfigDynamoDbTables;
 }
 
 export interface ConfigDynamoDbTables {
   installs: string;
+}
+
+export interface ConfigImages {
+  success: string[];
+  fail: string[];
 }
 
 export interface ConfigRedis {
