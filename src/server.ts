@@ -1,4 +1,4 @@
-import { App, AppOptions, LogLevel } from '@slack/bolt';
+import { App, AppOptions } from '@slack/bolt';
 import config from 'config';
 
 import fallHandler from './events/fall';
