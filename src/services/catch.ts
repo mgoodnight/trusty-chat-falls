@@ -10,7 +10,7 @@ export class CatchService extends ActionService {
   private readonly nobodyFallingBaseMsg = 'there is no one falling that you can catch!';
 
   get nobodyFallingRes(): string {
-    return `${this.nobodyFallingEmoji}  ${this.userId} <@${this.nobodyFallingBaseMsg}>`;
+    return `${this.nobodyFallingEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}`;
   }
 
   constructor(private userId: string, private channelId: string) {
