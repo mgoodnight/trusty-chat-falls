@@ -25,13 +25,8 @@ export class CacheService {
   }
 
   public async dequeueFallingUser(channelId: string, catcherUserId: string): Promise<string | undefined> {
-    const setSize = await this.main.zcard(channelId);
-    for (let i = 0; i < setSize; i++) {
-      const [nextUser] = await this.main.zrange(channelId, i, i + 1);
-      if (nextUser && nextUser !== catcherUserId) {
-        return nextUser;
-      }
-    }
+    const [nextUser] = await this.main.zpopmin(channelId);
+    return nextUser;
   }
 
   public async removeFallingUser(channelId: string, userId: string): Promise<void> {

@@ -1,27 +1,30 @@
 import config from 'config';
 
+import cacheService from './cache';
 import { ConfigImages } from '../types/config';
 
 export class ActionService {
-  constructor(private type: 'success' | 'fail') { }
+  protected readonly errorEmoji = ':x:';
+
+  constructor(private type: 'success' | 'fail', protected userId: string, protected channelId: string) { }
+
+  public async isUserFalling(): Promise<boolean> {
+    return Boolean(await cacheService.checkFallingUserExists(this.userId, this.channelId));
+  }
 
   public pickGif(): string {
-    const images: string[] = [];
-
     switch (this.type) {
       case 'success': {
-        images.push(...config.get<ConfigImages>('images').success);
-        return this.pickRandom(images);
+        return this.pickRandom(config.get<ConfigImages>('images').success);
       }
 
       case 'fail': {
-        images.push(...config.get<ConfigImages>('images').fail);
-        return this.pickRandom(images);
+        return this.pickRandom(config.get<ConfigImages>('images').fail);
       }
     }
   }
 
   private pickRandom(list: string[]): string {
-    return list[Math.floor(Math.random() * list.length)]
+    return list[Math.floor(Math.random() * list.length)];
   }
 }

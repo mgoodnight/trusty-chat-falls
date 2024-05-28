@@ -7,12 +7,18 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
     await payload.ack();
     const say = payload.say;
     const catcher = new CatchService(payload.body.user_id, payload.body.channel_id);
-    const successCaughtUserId = await catcher.catchFallingUser();
 
-    if (successCaughtUserId) {
-      await catcher.sendCaughtRes(say, successCaughtUserId);
+    const isFalling = await catcher.isUserFalling();
+    if (!isFalling) {
+      const successCaughtUserId = await catcher.catchFallingUser();
+
+      if (successCaughtUserId) {
+        await catcher.sendCaughtRes(say, successCaughtUserId);
+      } else {
+        await catcher.sendNobodyFallingRes(say);
+      }
     } else {
-      await say({ text: catcher.nobodyFallingRes });
+      await catcher.sendFallerNoCatch(say);
     }
   } catch (catchCmdErr) {
     console.log('error', catchCmdErr);

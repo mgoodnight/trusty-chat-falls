@@ -6,15 +6,16 @@ import cacheService from './cache';
 export class CatchService extends ActionService {
   private readonly caughtEmoji = ':tada:';
   private readonly nobodyFallingEmoji = ':sob:';
-  private readonly caughtBaseMsg = 'has successfully caught';
+  private readonly caughtBaseMsg = 'has successfully caught!';
+  private readonly fallerCatchBaseMsg = 'you can\'t catch while you are falling!';
   private readonly nobodyFallingBaseMsg = 'there is no one falling that you can catch!';
 
   get nobodyFallingRes(): string {
     return `${this.nobodyFallingEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}`;
   }
 
-  constructor(private userId: string, private channelId: string) {
-    super('success');
+  constructor(userId: string, channelId: string) {
+    super('success', userId, channelId);
   }
 
   public async catchFallingUser(): Promise<string | undefined> {
@@ -26,8 +27,16 @@ export class CatchService extends ActionService {
     }
   }
 
+  public async sendNobodyFallingRes(say: SayFn): Promise<void> {
+    await say({ text: `${this.errorEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}` })
+  }
+
   public async sendCaughtRes(say: SayFn, fallingUserId: string): Promise<void> {
     await say({ attachments: [this.buildCaughtResMessage(fallingUserId)] });
+  }
+
+  public async sendFallerNoCatch(say: SayFn): Promise<void> {
+    await say({ text: `${this.errorEmoji}  <@${this.userId}> ${this.fallerCatchBaseMsg}` })
   }
 
   private buildCaughtResMessage(fallingUserId: string): MessageAttachment {
