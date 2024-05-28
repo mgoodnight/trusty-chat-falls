@@ -2,6 +2,7 @@ import { MessageAttachment, SayFn } from '@slack/bolt';
 
 import { ActionService } from './action';
 import cacheService from './cache';
+import { ACTION_TYPE } from '../constants';
 
 export class FallService extends ActionService {
   private readonly fallenEmoji = ':skull_and_crossbones:';
@@ -11,7 +12,7 @@ export class FallService extends ActionService {
   private readonly fallingBaseMsg = 'is falling...';
 
   constructor(userId: string, channelId: string) {
-    super('fail', userId, channelId);
+    super(ACTION_TYPE.FAIL, userId, channelId);
   }
 
   public async sendAlreadyFallingRes(say: SayFn): Promise<void> {
@@ -27,11 +28,10 @@ export class FallService extends ActionService {
   }
 
   public async hasUserBeenCaught(): Promise<boolean> {
-    return Boolean(await cacheService.isFallingUserCaught(this.userId, this.channelId));
+    return Boolean(await cacheService.fallingUserCaught(this.userId, this.channelId));
   }
 
-  public async unSetFallingUser(): Promise<void> {
-    await cacheService.removeFallingUser(this.channelId, this.userId);
+  public async unSetSuccessUser(): Promise<void> {
     await cacheService.removeSuccessFallingUser(this.userId, this.channelId);
   }
 
