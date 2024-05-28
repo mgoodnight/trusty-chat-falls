@@ -21,9 +21,9 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
         const userCaught = await fall.hasUserBeenCaught();
         if (!userCaught) {
           await fall.sendFallenRes(say);
+        } else {
+          await fall.unSetSuccessUser();
         }
-
-        await fall.unSetFallingUser();
       }, 5000);
     }
   } catch (fallCmdErr) {

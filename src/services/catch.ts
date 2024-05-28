@@ -2,6 +2,7 @@ import { MessageAttachment, SayFn } from '@slack/bolt';
 
 import { ActionService } from './action';
 import cacheService from './cache';
+import { ACTION_TYPE } from '../constants';
 
 export class CatchService extends ActionService {
   private readonly caughtEmoji = ':tada:';
@@ -15,12 +16,11 @@ export class CatchService extends ActionService {
   }
 
   constructor(userId: string, channelId: string) {
-    super('success', userId, channelId);
+    super(ACTION_TYPE.SUCCESS, userId, channelId);
   }
 
   public async catchFallingUser(): Promise<string | undefined> {
-    const nextFallingUserId = await cacheService.dequeueFallingUser(this.channelId, this.userId);
-
+    const nextFallingUserId = await cacheService.dequeueFallingUser(this.channelId);
     if (nextFallingUserId) {
       await cacheService.setSuccessFallingUser(nextFallingUserId, this.channelId);
       return nextFallingUserId;

@@ -1,8 +1,9 @@
-import { App, AppOptions } from '@slack/bolt';
+import { App, AppOptions, ExpressReceiver, ExpressReceiverOptions } from '@slack/bolt';
 import config from 'config';
 
 import fallHandler from './events/fall';
 import catchHandler from './events/catch';
+import mainCustomRouter from './routes';
 import { SlackTeamService } from './services/slack/team';
 import { ConfigSlackInstall, ConfigServer } from './types/config';
 
@@ -34,7 +35,10 @@ export class Server {
       installationStore: SlackTeamService.getStore(),
     };
 
-    this.app = new App(initOptions);
+    const customRoutesReceiver = new ExpressReceiver(initOptions as ExpressReceiverOptions);
+    customRoutesReceiver.router.use(mainCustomRouter);
+
+    this.app = new App({ ...initOptions, receiver: customRoutesReceiver } as AppOptions);
     this.app.command('/fall', fallHandler);
     this.app.command('/catch', catchHandler);
   }
