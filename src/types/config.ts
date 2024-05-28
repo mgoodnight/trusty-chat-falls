@@ -24,10 +24,6 @@ export interface ConfigServer {
   port: number;
 }
 
-export interface ConfigSettings {
-  fallMs: number;
-}
-
 export interface ConfigSlackInstall {
   scopes: string[];
 }

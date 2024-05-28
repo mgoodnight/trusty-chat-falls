@@ -1,8 +1,6 @@
 import { SlackCommandMiddlewareArgs } from '@slack/bolt';
-import config from 'config';
 
 import { FallService } from '../services/fall';
-import { ConfigSettings } from '../types/config';
 
 export default async (payload: SlackCommandMiddlewareArgs) => {
   try {
@@ -12,11 +10,11 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
     const isFallingAlready = await fall.isUserFalling();
 
     if (isFallingAlready) {
-      await say({ text: fall.alreadyFallingRes });
+      await fall.sendAlreadyFallingRes(say);
     } else {
       await Promise.all([
         fall.setUserFalling(),
-        say({ text: fall.fallingRes })
+        fall.sendFallingRes(say)
       ]);
 
       setTimeout(async () => {
@@ -26,7 +24,7 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
         }
 
         await fall.unSetFallingUser();
-      }, config.get<ConfigSettings>('settings').fallMs);
+      }, 5000);
     }
   } catch (fallCmdErr) {
     console.log('error', fallCmdErr);

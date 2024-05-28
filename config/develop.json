@@ -1,7 +1,4 @@
 {
-  "settings": {
-    "fallMs": 10000
-  },
   "dynamoDb": {
     "tables": {
       "installs": "SlackTeamInstallations"
