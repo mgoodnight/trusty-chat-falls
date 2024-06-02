@@ -10,7 +10,6 @@ export class SlackTeamService {
     return {
       storeInstallation: async (install: SlackInstall): Promise<void> => {
         const teamId = install?.team?.id as string;
-
         if (teamId) {
           await SlackTeamService.upsertTeam(install);
         } else {
@@ -23,7 +22,6 @@ export class SlackTeamService {
         query: InstallationQuery<boolean>,
       ): Promise<SlackInstall> => {
         const teamId = query.teamId;
-
         if (teamId) {
           const team = await SlackTeamService.getSlackTeam(teamId);
           return team?.install as SlackInstall;
@@ -36,12 +34,10 @@ export class SlackTeamService {
 
   static async upsertTeam(install: SlackInstall): Promise<SlackTeamService> {
     const newTeam = { teamId: install.team?.id as string, install };
-    console.log('STORING', newTeam);
-    const res = await DynamoDbAdapter.put({
+    await DynamoDbAdapter.put({
       TableName: config.get<ConfigDynamoDbTables>('dynamoDb.tables').installs,
       Item: newTeam,
     });
-    console.log('STORE COMPLETE', res);
 
     return new SlackTeamService(newTeam);
   }
