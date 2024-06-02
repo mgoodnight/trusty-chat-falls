@@ -33,14 +33,18 @@ export class CacheService {
     return await this.main.exists(this.buildSuccessCacheKey(userId, channelId));
   }
 
-  public async dequeueFallingUser(
-    channelId: string,
-  ): Promise<string | undefined> {
-    const [nextUser] = await this.main.zpopmin(channelId);
-    return nextUser;
+  public async dequeueFallingUser(channelId: string): Promise<string[]> {
+    return await this.main.zpopmin(channelId);
   }
 
-  public async removeSuccessFallingUser(
+  public async removeFallingUser(
+    channelId: string,
+    userId: string,
+  ): Promise<void> {
+    await this.main.zrem(channelId, userId);
+  }
+
+  public async removeUserSuccessFlag(
     userId: string,
     channelId: string,
   ): Promise<void> {

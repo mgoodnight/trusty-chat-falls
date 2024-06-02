@@ -22,9 +22,10 @@ export class CatchService extends ActionService {
   }
 
   public async catchFallingUser(): Promise<string | undefined> {
-    const nextFallingUserId = await cacheService.dequeueFallingUser(
+    const [nextFallingUserId] = await cacheService.dequeueFallingUser(
       this.channelId,
     );
+
     if (nextFallingUserId) {
       await cacheService.setSuccessFallingUser(
         nextFallingUserId,
