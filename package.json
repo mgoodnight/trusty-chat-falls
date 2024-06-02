@@ -6,9 +6,9 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "build:watch": "tsc --watch",
-    "rebuild:docker": "docker-compose build --no-cache --force-rm",
+    "rebuild:docker": "docker compose build --no-cache --force-rm",
     "start": "npm-run-all clean --parallel build:watch nodemon:debug --print-label",
-    "start:docker": "docker-compose up -V -d",
+    "start:docker": "docker compose up -V -d",
     "clean": "rimraf ./dist",
     "nodemon:debug": "NODE_ENV=develop nodemon",
     "test": "NODE_ENV=develop jest",
@@ -27,8 +27,9 @@
   },
   "homepage": "https://github.com/mgoodnight/trusty-chat-falls#readme",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.588.0",
+    "@aws-sdk/lib-dynamodb": "^3.588.0",
     "@slack/bolt": "^3.18.0",
-    "aws-sdk": "^2.1623.0",
     "config": "^3.3.11",
     "dotenv": "^16.4.5",
     "ioredis": "^5.4.1"

@@ -1,35 +1,29 @@
-import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  GetCommandInput,
+  GetCommandOutput,
+  PutCommand,
+  PutCommandInput,
+  PutCommandOutput,
+} from '@aws-sdk/lib-dynamodb';
 
 export class DynamoDbAdapter {
-  private client: DynamoDB.DocumentClient;
+  private client: DynamoDBDocumentClient;
 
-  constructor(params?: DynamoDB.DocumentClient.DocumentClientOptions) {
-    this.client = new DynamoDB.DocumentClient(params);
+  constructor(params: DynamoDBClientConfig = {}) {
+    this.client = DynamoDBDocumentClient.from(new DynamoDBClient(params), {
+      marshallOptions: { removeUndefinedValues: true },
+    });
   }
 
-  public async get(
-    tableName: string,
-    key: DynamoDB.Key,
-  ): Promise<DynamoDB.DocumentClient.GetItemOutput> {
-    return await this.client.get({ TableName: tableName, Key: key }).promise();
+  public async get(params: GetCommandInput): Promise<GetCommandOutput> {
+    return await this.client.send(new GetCommand(params));
   }
 
-  public async put(
-    tableName: string,
-    item: DynamoDB.DocumentClient.PutItemInputAttributeMap,
-  ): Promise<DynamoDB.DocumentClient.PutItemOutput> {
-    return await this.client
-      .put({ TableName: tableName, Item: item })
-      .promise();
-  }
-
-  public async delete(
-    tableName: string,
-    key: DynamoDB.Key,
-  ): Promise<DynamoDB.DocumentClient.DeleteItemOutput> {
-    return await this.client
-      .delete({ TableName: tableName, Key: key })
-      .promise();
+  public async put(params: PutCommandInput): Promise<PutCommandOutput> {
+    return await this.client.send(new PutCommand(params));
   }
 }
 
