@@ -16,7 +16,9 @@ export class FallService extends ActionService {
   }
 
   public async sendAlreadyFallingRes(say: SayFn): Promise<void> {
-    await say({ text: `${this.errorEmoji}  <@${this.userId}> ${this.alreadyFallingMsg}` });
+    await say({
+      text: `${this.errorEmoji}  <@${this.userId}> ${this.alreadyFallingMsg}`,
+    });
   }
 
   public async sendFallenRes(say: SayFn): Promise<void> {
@@ -24,11 +26,15 @@ export class FallService extends ActionService {
   }
 
   public async sendFallingRes(say: SayFn): Promise<void> {
-    await say({ text: `${this.fallingEmoji}  <@${this.userId}> ${this.fallingBaseMsg}` });
+    await say({
+      text: `${this.fallingEmoji}  <@${this.userId}> ${this.fallingBaseMsg}`,
+    });
   }
 
   public async hasUserBeenCaught(): Promise<boolean> {
-    return Boolean(await cacheService.fallingUserCaught(this.userId, this.channelId));
+    return Boolean(
+      await cacheService.fallingUserCaught(this.userId, this.channelId),
+    );
   }
 
   public async unSetSuccessUser(): Promise<void> {
@@ -42,7 +48,7 @@ export class FallService extends ActionService {
   private buildFallenResMessage(): MessageAttachment {
     return {
       text: `${this.fallenEmoji}  <@${this.userId}> ${this.fallenBaseMsg}`,
-      image_url: this.pickGif()
+      image_url: this.pickGif(),
     };
   }
 }

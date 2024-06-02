@@ -6,7 +6,10 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
   try {
     await payload.ack();
     const say = payload.say;
-    const catcher = new CatchService(payload.body.user_id, payload.body.channel_id);
+    const catcher = new CatchService(
+      payload.body.user_id,
+      payload.body.channel_id,
+    );
 
     const isFalling = await catcher.isUserFalling();
     if (!isFalling) {
@@ -23,4 +26,4 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
   } catch (catchCmdErr) {
     console.log('error', catchCmdErr);
   }
-}
+};

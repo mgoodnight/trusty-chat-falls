@@ -8,8 +8,10 @@ export class CatchService extends ActionService {
   private readonly caughtEmoji = ':tada:';
   private readonly nobodyFallingEmoji = ':sob:';
   private readonly caughtBaseMsg = 'has successfully caught!';
-  private readonly fallerCatchBaseMsg = 'you can\'t catch while you are falling!';
-  private readonly nobodyFallingBaseMsg = 'there is no one falling that you can catch!';
+  private readonly fallerCatchBaseMsg =
+    "you can't catch while you are falling!";
+  private readonly nobodyFallingBaseMsg =
+    'there is no one falling that you can catch!';
 
   get nobodyFallingRes(): string {
     return `${this.nobodyFallingEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}`;
@@ -20,15 +22,22 @@ export class CatchService extends ActionService {
   }
 
   public async catchFallingUser(): Promise<string | undefined> {
-    const nextFallingUserId = await cacheService.dequeueFallingUser(this.channelId);
+    const nextFallingUserId = await cacheService.dequeueFallingUser(
+      this.channelId,
+    );
     if (nextFallingUserId) {
-      await cacheService.setSuccessFallingUser(nextFallingUserId, this.channelId);
+      await cacheService.setSuccessFallingUser(
+        nextFallingUserId,
+        this.channelId,
+      );
       return nextFallingUserId;
     }
   }
 
   public async sendNobodyFallingRes(say: SayFn): Promise<void> {
-    await say({ text: `${this.errorEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}` })
+    await say({
+      text: `${this.errorEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}`,
+    });
   }
 
   public async sendCaughtRes(say: SayFn, fallingUserId: string): Promise<void> {
@@ -36,13 +45,15 @@ export class CatchService extends ActionService {
   }
 
   public async sendFallerNoCatch(say: SayFn): Promise<void> {
-    await say({ text: `${this.errorEmoji}  <@${this.userId}> ${this.fallerCatchBaseMsg}` })
+    await say({
+      text: `${this.errorEmoji}  <@${this.userId}> ${this.fallerCatchBaseMsg}`,
+    });
   }
 
   private buildCaughtResMessage(fallingUserId: string): MessageAttachment {
     return {
       text: `${this.caughtEmoji}  <@${this.userId}> ${this.caughtBaseMsg} <@${fallingUserId}>`,
-      image_url: this.pickGif()
+      image_url: this.pickGif(),
     };
   }
 }

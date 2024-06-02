@@ -7,10 +7,16 @@ import { ACTION_TYPE } from '../constants';
 export class ActionService {
   protected readonly errorEmoji = ':x:';
 
-  constructor(private type: ACTION_TYPE, protected userId: string, protected channelId: string) { }
+  constructor(
+    private type: ACTION_TYPE,
+    protected userId: string,
+    protected channelId: string,
+  ) {}
 
   public async isUserFalling(): Promise<boolean> {
-    return Boolean(await cacheService.checkFallingUserExists(this.userId, this.channelId));
+    return Boolean(
+      await cacheService.checkFallingUserExists(this.userId, this.channelId),
+    );
   }
 
   public pickGif(): string | undefined {

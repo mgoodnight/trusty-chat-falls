@@ -11,7 +11,10 @@
     "start:docker": "docker-compose up -V -d",
     "clean": "rimraf ./dist",
     "nodemon:debug": "NODE_ENV=develop nodemon",
-    "test": "jest"
+    "test": "NODE_ENV=develop jest",
+    "lint": "eslint ./src/**/*.ts",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -31,14 +34,19 @@
     "ioredis": "^5.4.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.4.0",
     "@types/config": "^3.3.4",
+    "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.12",
+    "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "3.3.0",
     "rimraf": "^5.0.7",
     "ts-jest": "^29.1.4",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.11.0"
   }
 }
