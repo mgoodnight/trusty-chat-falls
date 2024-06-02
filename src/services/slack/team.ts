@@ -17,10 +17,14 @@ export class SlackTeamService {
             SlackTeamService.upsertTeam(install);
           }
         } else {
-          throw new Error('Failed saving installation data to installationStore');
+          throw new Error(
+            'Failed saving installation data to installationStore',
+          );
         }
       },
-      fetchInstallation: async (query: InstallationQuery<boolean>): Promise<SlackInstall> => {
+      fetchInstallation: async (
+        query: InstallationQuery<boolean>,
+      ): Promise<SlackInstall> => {
         const teamId = query.teamId;
 
         if (teamId) {
@@ -29,18 +33,26 @@ export class SlackTeamService {
         }
 
         throw new Error('Failed fetching installation from installationStore');
-      }
+      },
     };
   }
 
   static async upsertTeam(install: SlackInstall): Promise<SlackTeamService> {
-    const newTeam = { teamId: install.team?.id as string, install }
-    await DynamoDbClient.put(config.get<ConfigDynamoDbTables>('dynamoDb.tables').installs, newTeam);
+    const newTeam = { teamId: install.team?.id as string, install };
+    await DynamoDbClient.put(
+      config.get<ConfigDynamoDbTables>('dynamoDb.tables').installs,
+      newTeam,
+    );
     return new SlackTeamService(newTeam);
   }
 
-  static async getSlackTeam(teamId: string): Promise<SlackTeamService | undefined> {
-    const teamInstall = await DynamoDbClient.get(config.get<ConfigDynamoDbTables>('dynamoDb.tables').installs, { teamId });
+  static async getSlackTeam(
+    teamId: string,
+  ): Promise<SlackTeamService | undefined> {
+    const teamInstall = await DynamoDbClient.get(
+      config.get<ConfigDynamoDbTables>('dynamoDb.tables').installs,
+      { teamId },
+    );
     if (teamInstall.Item) {
       return new SlackTeamService(teamInstall.Item as SlackTeam);
     }
@@ -50,5 +62,5 @@ export class SlackTeamService {
     return this.team.install;
   }
 
-  constructor(private team: SlackTeam) { }
+  constructor(private team: SlackTeam) {}
 }

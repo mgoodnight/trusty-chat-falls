@@ -51,10 +51,7 @@
   },
   "slack": {
     "install": {
-      "scopes": [
-        "commands",
-        "chat:write"
-      ]
+      "scopes": ["commands", "chat:write"]
     }
   }
 }

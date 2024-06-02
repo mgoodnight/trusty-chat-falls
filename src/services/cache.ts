@@ -12,28 +12,45 @@ export class CacheService {
     this.main = new RedisAdapter(this.connectDetails.main).client;
   }
 
-  public async addFallingUser(userId: string, channelId: string): Promise<void> {
+  public async addFallingUser(
+    userId: string,
+    channelId: string,
+  ): Promise<void> {
     await this.main.zadd(channelId, Date.now(), userId);
   }
 
-  public async checkFallingUserExists(userId: string, channelId: string): Promise<string | null> {
+  public async checkFallingUserExists(
+    userId: string,
+    channelId: string,
+  ): Promise<string | null> {
     return await this.main.zscore(channelId, userId);
   }
 
-  public async fallingUserCaught(userId: string, channelId: string): Promise<number> {
+  public async fallingUserCaught(
+    userId: string,
+    channelId: string,
+  ): Promise<number> {
     return await this.main.exists(this.buildSuccessCacheKey(userId, channelId));
   }
 
-  public async dequeueFallingUser(channelId: string): Promise<string | undefined> {
+  public async dequeueFallingUser(
+    channelId: string,
+  ): Promise<string | undefined> {
     const [nextUser] = await this.main.zpopmin(channelId);
     return nextUser;
   }
 
-  public async removeSuccessFallingUser(userId: string, channelId: string): Promise<void> {
+  public async removeSuccessFallingUser(
+    userId: string,
+    channelId: string,
+  ): Promise<void> {
     await this.main.del(this.buildSuccessCacheKey(userId, channelId));
   }
 
-  public async setSuccessFallingUser(userId: string, channelId: string): Promise<void> {
+  public async setSuccessFallingUser(
+    userId: string,
+    channelId: string,
+  ): Promise<void> {
     await this.main.set(this.buildSuccessCacheKey(userId, channelId), 1);
   }
 

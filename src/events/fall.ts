@@ -12,10 +12,7 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
     if (isFallingAlready) {
       await fall.sendAlreadyFallingRes(say);
     } else {
-      await Promise.all([
-        fall.setUserFalling(),
-        fall.sendFallingRes(say)
-      ]);
+      await Promise.all([fall.setUserFalling(), fall.sendFallingRes(say)]);
 
       setTimeout(async () => {
         const userCaught = await fall.hasUserBeenCaught();
@@ -29,4 +26,4 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
   } catch (fallCmdErr) {
     console.log('error', fallCmdErr);
   }
-}
+};

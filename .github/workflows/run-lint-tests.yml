@@ -1,0 +1,26 @@
+name: Run Lint and Tests
+
+on:
+  pull_request:
+    branches: [main]
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run lint and prettier
+        run: |
+          npm run lint
+          npm run prettier
+      - name: Run tests
+        run: npm test

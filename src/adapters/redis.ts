@@ -13,5 +13,5 @@ export class RedisAdapter {
     return this._client;
   }
 
-  constructor(private connectDetails: ConfigRedisDetails) { }
+  constructor(private connectDetails: ConfigRedisDetails) {}
 }
