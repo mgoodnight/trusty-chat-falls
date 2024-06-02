@@ -24,6 +24,6 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
       await catcher.sendFallerNoCatch(say);
     }
   } catch (catchCmdErr) {
-    console.log('error', catchCmdErr);
+    console.error(catchCmdErr);
   }
 };

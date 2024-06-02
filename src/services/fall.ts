@@ -37,8 +37,11 @@ export class FallService extends ActionService {
     );
   }
 
-  public async unSetSuccessUser(): Promise<void> {
-    await cacheService.removeSuccessFallingUser(this.userId, this.channelId);
+  public async unSetUser(): Promise<void> {
+    await Promise.all([
+      cacheService.removeUserSuccessFlag(this.userId, this.channelId),
+      cacheService.removeFallingUser(this.channelId, this.userId),
+    ]);
   }
 
   public async setUserFalling(): Promise<void> {
