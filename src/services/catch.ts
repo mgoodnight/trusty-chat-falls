@@ -13,10 +13,6 @@ export class CatchService extends ActionService {
   private readonly nobodyFallingBaseMsg =
     'there is no one falling that you can catch!';
 
-  get nobodyFallingRes(): string {
-    return `${this.nobodyFallingEmoji}  <@${this.userId}> ${this.nobodyFallingBaseMsg}`;
-  }
-
   constructor(userId: string, channelId: string) {
     super(ACTION_TYPE.SUCCESS, userId, channelId);
   }
@@ -42,19 +38,20 @@ export class CatchService extends ActionService {
   }
 
   public async sendCaughtRes(say: SayFn, fallingUserId: string): Promise<void> {
-    await say({ attachments: [this.buildCaughtResMessage(fallingUserId)] });
+    const attachment = {
+      text: `${this.caughtEmoji}  <@${this.userId}> ${this.caughtBaseMsg} <@${fallingUserId}>`,
+      image_url: this.pickGif(),
+    };
+
+    await say({
+      text: attachment.text,
+      attachments: [attachment],
+    });
   }
 
   public async sendFallerNoCatch(say: SayFn): Promise<void> {
     await say({
       text: `${this.errorEmoji}  <@${this.userId}> ${this.fallerCatchBaseMsg}`,
     });
-  }
-
-  private buildCaughtResMessage(fallingUserId: string): MessageAttachment {
-    return {
-      text: `${this.caughtEmoji}  <@${this.userId}> ${this.caughtBaseMsg} <@${fallingUserId}>`,
-      image_url: this.pickGif(),
-    };
   }
 }
