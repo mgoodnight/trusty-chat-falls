@@ -1,6 +1,6 @@
 ## About
 
-Trust falls for Slack via `setTimeout()` and Redis sorted sets 
+Trust falls for Slack via `setTimeout()` and Redis sorted sets
 
 ## Prerequisites
 
