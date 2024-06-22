@@ -1,4 +1,4 @@
-import { MessageAttachment, SayFn } from '@slack/bolt';
+import { SayFn } from '@slack/bolt';
 
 import { ActionService } from './action';
 import cacheService from './cache';
