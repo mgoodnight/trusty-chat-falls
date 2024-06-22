@@ -2,16 +2,22 @@ import { SlackCommandMiddlewareArgs } from '@slack/bolt';
 
 import { CatchService } from '../services/catch';
 
+/**
+ * /catch slash command event handler
+ *
+ * @param {SlackCommandMiddlewareArgs} payload
+ */
 export default async (payload: SlackCommandMiddlewareArgs) => {
   try {
     await payload.ack();
+
     const say = payload.say;
     const catcher = new CatchService(
       payload.body.user_id,
       payload.body.channel_id,
     );
-
     const isFalling = await catcher.isUserFalling();
+
     if (!isFalling) {
       const successCaughtUserId = await catcher.catchFallingUser();
 

@@ -2,9 +2,15 @@ import { SlackCommandMiddlewareArgs } from '@slack/bolt';
 
 import { FallService } from '../services/fall';
 
+/**
+ * /fall slash command event handler
+ *
+ * @param {SlackCommandMiddlewareArgs} payload
+ */
 export default async (payload: SlackCommandMiddlewareArgs) => {
   try {
     await payload.ack();
+
     const say = payload.say;
     const fall = new FallService(payload.body.user_id, payload.body.channel_id);
     const isFallingAlready = await fall.isUserFalling();
@@ -16,6 +22,7 @@ export default async (payload: SlackCommandMiddlewareArgs) => {
 
       setTimeout(async () => {
         const userCaught = await fall.hasUserBeenCaught();
+
         if (!userCaught) {
           await fall.sendFallenRes(say);
         }

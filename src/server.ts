@@ -58,7 +58,7 @@ export class Server {
    *
    * @memberof Server
    */
-  public start() {
+  public start(): void {
     const port = config.get<ConfigServer>('server').port;
     this.app
       .start(port)

@@ -1,4 +1,4 @@
-import { MessageAttachment, SayFn } from '@slack/bolt';
+import { SayFn } from '@slack/bolt';
 
 import { ActionService } from './action';
 import cacheService from './cache';
@@ -22,7 +22,16 @@ export class FallService extends ActionService {
   }
 
   public async sendFallenRes(say: SayFn): Promise<void> {
-    await say({ attachments: [this.buildFallenResMessage()] });
+    const text = `${this.fallenEmoji}  <@${this.userId}> ${this.fallenBaseMsg}`;
+    const attachment = {
+      text,
+      image_url: this.pickGif(),
+    };
+
+    await say({
+      text,
+      attachments: [attachment],
+    });
   }
 
   public async sendFallingRes(say: SayFn): Promise<void> {
@@ -46,12 +55,5 @@ export class FallService extends ActionService {
 
   public async setUserFalling(): Promise<void> {
     await cacheService.addFallingUser(this.userId, this.channelId);
-  }
-
-  private buildFallenResMessage(): MessageAttachment {
-    return {
-      text: `${this.fallenEmoji}  <@${this.userId}> ${this.fallenBaseMsg}`,
-      image_url: this.pickGif(),
-    };
   }
 }
