@@ -1,7 +1,7 @@
 display_information:
   name: Trusty Chat Falls
   description: Trust falls in Slack
-  background_color: "#000000"
+  background_color: '#000000'
 features:
   bot_user:
     display_name: Trusty Chat Falls Dev

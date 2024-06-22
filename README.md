@@ -1,6 +1,6 @@
 ## About
 
-Trust falls for Slack via `setTimeout()` and Redis sorted sets 
+Trust falls for Slack via `setTimeout()` and Redis sorted sets
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ If you want to test with installing to multiple workspaces see [Slack's docs](ht
 
 Invite your bot into a channel using the `/invite @Trusty Chat Falls` command.
 
-`/fall`
-`/catch`
+- `/fall`
+- `/catch`
 
 There is also a `/healthcheck` route available as well.
