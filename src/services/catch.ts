@@ -6,7 +6,6 @@ import { ACTION_TYPE } from '../constants';
 
 export class CatchService extends ActionService {
   private readonly caughtEmoji = ':tada:';
-  private readonly nobodyFallingEmoji = ':sob:';
   private readonly caughtBaseMsg = 'has successfully caught!';
   private readonly fallerCatchBaseMsg =
     "you can't catch while you are falling!";
